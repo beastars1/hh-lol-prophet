@@ -176,6 +176,7 @@ func checkUpdate() error {
 	}
 	return nil
 }
+
 func selfUpdate() error {
 	binNewPath, err := os.Executable()
 	if err != nil {

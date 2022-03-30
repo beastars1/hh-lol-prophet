@@ -44,6 +44,7 @@ func (api Api) QueryHorseBySummonerName(c *gin.Context) {
 			app.ErrorMsg("系统错误")
 			return
 		}
+		// 如果为空，查询自己的分数
 		summonerID = api.p.currSummoner.SummonerId
 	} else {
 		info, err := lcu.QuerySummonerByName(summonerName)

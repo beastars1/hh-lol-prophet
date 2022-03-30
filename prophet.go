@@ -113,8 +113,10 @@ func (p *Prophet) Run() error {
 	go p.MonitorStart()
 	go p.captureStartMessage()
 	p.initGin()
+	// todo 替换网页端
 	go p.initWebview()
-	log.Printf("%s已启动 v%s -- %s", global.AppName, APPVersion, global.WebsiteTitle)
+	log.Printf("%s已启动 v%s", global.AppName, APPVersion)
+	// 监听，守护进程
 	return p.notifyQuit()
 }
 func (p *Prophet) isLcuActive() bool {
@@ -150,6 +152,7 @@ func (p *Prophet) MonitorStart() {
 	}
 }
 
+// 监听Gin服务，直到退出程序
 func (p *Prophet) notifyQuit() error {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
@@ -349,6 +352,8 @@ func (p *Prophet) initWebview() {
 	log.Println("界面已在浏览器中打开,若未打开请手动访问 " + websiteUrl)
 	return
 }
+
+// ChampionSelectStart 选择英雄时进行核心逻辑处理：获取人员、计算得分、发送信息
 func (p Prophet) ChampionSelectStart() {
 	clientCfg := global.GetClientConf()
 	sendConversationMsgDelayCtx, cancel := context.WithTimeout(context.Background(),
@@ -416,8 +421,7 @@ func (p Prophet) ChampionSelectStart() {
 		if len(currKDAMsg) > 0 {
 			currKDAMsg = currKDAMsg[:len(currKDAMsg)-1]
 		}
-		msg := fmt.Sprintf("%s(%d): %s %s  -- %s", horse, int(scoreInfo.Score), scoreInfo.SummonerName,
-			currKDAMsg, global.AdaptChatWebsiteTitle)
+		msg := fmt.Sprintf("本局%s：%s 近期KDA：%s", horse, scoreInfo.SummonerName, currKDAMsg)
 		<-sendConversationMsgDelayCtx.Done()
 		if clientCfg.AutoSendTeamHorse {
 			mergedMsg += msg + "\n"
@@ -533,8 +537,7 @@ func (p Prophet) CalcEnemyTeamScore() {
 		if len(currKDAMsg) > 0 {
 			currKDAMsg = currKDAMsg[:len(currKDAMsg)-1]
 		}
-		msg := fmt.Sprintf("%s(%d): %s %s  -- %s", horse, int(scoreInfo.Score), scoreInfo.SummonerName,
-			currKDAMsg, global.AdaptChatWebsiteTitle)
+		msg := fmt.Sprintf("敌方%s：%s 近期KDA：%s", horse, scoreInfo.SummonerName, currKDAMsg)
 		allMsg += msg + "\n"
 	}
 	_ = clipboard.WriteAll(allMsg)

@@ -24,13 +24,11 @@ type (
 )
 
 const (
-	LogWriterCleanupKey   = "logWriter"
-	sentryDsn             = "https://1c762696e30c4febbb6f8cbcf8835603@o1144230.ingest.sentry.io/6207862"
-	buffApiUrl            = "https://lol.buffge.com"
-	defaultLogPath        = "./logs/hh-lol-prophet.log"
-	WebsiteTitle          = "lol.buffge.com"
-	AdaptChatWebsiteTitle = "lol.buffge点康姆"
-	AppName               = "lol对局先知"
+	LogWriterCleanupKey = "logWriter"
+	sentryDsn           = "https://1c762696e30c4febbb6f8cbcf8835603@o1144230.ingest.sentry.io/6207862"
+	buffApiUrl          = "https://lol.buffge.com"
+	defaultLogPath      = "./logs/hh-lol-prophet.log"
+	AppName             = "lol对局先知"
 )
 
 var (
@@ -41,7 +39,7 @@ var (
 		AutoBanChampID:                 0,
 		AutoSendTeamHorse:              true,
 		ShouldSendSelfHorse:            true,
-		HorseNameConf:                  [6]string{"通天代", "小代", "上等马", "中等马", "下等马", "牛马"},
+		HorseNameConf:                  [6]string{"汗血宝马", "上等马", "中等马", "下等马", "牛马", "没有马"},
 		ChooseSendHorseMsg:             [6]bool{true, true, true, true, true, true},
 		ChooseChampSendMsgDelaySec:     3,
 		ShouldInGameSaveMsgToClipBoard: true,
@@ -121,12 +119,12 @@ var (
 			},
 			AdjustKDA: [2]float64{2, 5},
 			Horse: [6]conf.HorseScoreConf{
-				{Score: 180, Name: "通天代"},
-				{Score: 150, Name: "小代"},
-				{Score: 125, Name: "上等马"},
-				{Score: 105, Name: "中等马"},
-				{Score: 95, Name: "下等马"},
-				{Score: 0.0001, Name: "牛马"},
+				{Score: 160, Name: "汗血宝马"},
+				{Score: 130, Name: "上等马"},
+				{Score: 110, Name: "中等马"},
+				{Score: 90, Name: "下等马"},
+				{Score: 50, Name: "牛马"},
+				{Score: 0.0001, Name: "没有马"},
 			},
 			MergeMsg: false,
 		},
