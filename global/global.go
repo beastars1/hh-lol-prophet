@@ -25,10 +25,19 @@ type (
 
 const (
 	LogWriterCleanupKey = "logWriter"
-	sentryDsn           = "https://1c762696e30c4febbb6f8cbcf8835603@o1144230.ingest.sentry.io/6207862"
+	sentryDsn           = "https://815bc0eb2615452caa81e3ccb536ce05@o1184940.ingest.sentry.io/6303327"
 	buffApiUrl          = "https://lol.buffge.com"
 	defaultLogPath      = "./logs/hh-lol-prophet.log"
 	AppName             = "lol对局先知"
+)
+
+const (
+	horse1 = "汗血宝马"
+	horse2 = "上等马"
+	horse3 = "中等马"
+	horse4 = "下等马"
+	horse5 = "牛马"
+	horse6 = "没有马"
 )
 
 var (
@@ -39,7 +48,7 @@ var (
 		AutoBanChampID:                 0,
 		AutoSendTeamHorse:              true,
 		ShouldSendSelfHorse:            true,
-		HorseNameConf:                  [6]string{"汗血宝马", "上等马", "中等马", "下等马", "牛马", "没有马"},
+		HorseNameConf:                  [6]string{horse1, horse2, horse3, horse4, horse5, horse6},
 		ChooseSendHorseMsg:             [6]bool{true, true, true, true, true, true},
 		ChooseChampSendMsgDelaySec:     3,
 		ShouldInGameSaveMsgToClipBoard: true,
@@ -119,12 +128,12 @@ var (
 			},
 			AdjustKDA: [2]float64{2, 5},
 			Horse: [6]conf.HorseScoreConf{
-				{Score: 160, Name: "汗血宝马"},
-				{Score: 130, Name: "上等马"},
-				{Score: 110, Name: "中等马"},
-				{Score: 90, Name: "下等马"},
-				{Score: 50, Name: "牛马"},
-				{Score: 0.0001, Name: "没有马"},
+				{Score: 160, Name: horse1},
+				{Score: 130, Name: horse2},
+				{Score: 110, Name: horse3},
+				{Score: 90, Name: horse4},
+				{Score: 50, Name: horse5},
+				{Score: 0.0001, Name: horse6},
 			},
 			MergeMsg: false,
 		},

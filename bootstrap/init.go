@@ -169,18 +169,32 @@ func initLib() {
 }
 
 func initUserInfo() {
-	resp, err := http.Get("https://api.ip.sb/ip")
-	if err != nil {
-		return
-	}
-	defer resp.Body.Close()
-	bts, _ := io.ReadAll(resp.Body)
 	global.SetUserInfo(global.UserInfo{
-		IP: strings.Trim(string(bts), "\n"),
+		IP: getIp(),
 		// Mac:   windows.GetMac(),
 		// CpuID: windows.GetCpuID(),
 	})
 }
+
+func getIp() string {
+	ip := "unknown"
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", "https://api.ip.sb/ip", nil)
+	req.Header.Set("user-agent",
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.55")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return ip
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == 200 {
+		bts, _ := io.ReadAll(resp.Body)
+		ip = strings.Trim(string(bts), "\n")
+	}
+	return ip
+}
+
 func initSentry(dsn string) error {
 	isDebugMode := global.IsDevMode()
 	sampleRate := 1.0
@@ -201,7 +215,7 @@ func initSentry(dsn string) error {
 		}
 		userInfo := global.GetUserInfo()
 		sentry.ConfigureScope(func(scope *sentry.Scope) {
-			scope.SetContext("buffgeDefault", map[string]interface{}{
+			scope.SetContext("lol", map[string]interface{}{
 				"ip":      userInfo.IP,
 				"version": global.AppBuildInfo.Version,
 				// "mac":   userInfo.Mac,

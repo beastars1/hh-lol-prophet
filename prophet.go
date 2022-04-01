@@ -393,10 +393,6 @@ func (p Prophet) ChampionSelectStart() {
 		})
 	}
 	_ = g.Wait()
-	// 根据所有用户的分数判断小代上等马中等马下等马
-	for _, score := range summonerIDMapScore {
-		log.Printf("用户:%s,得分:%.2f\n", score.SummonerName, score.Score)
-	}
 
 	scoreCfg := global.GetScoreConf()
 	allMsg := ""
@@ -421,7 +417,9 @@ func (p Prophet) ChampionSelectStart() {
 		if len(currKDAMsg) > 0 {
 			currKDAMsg = currKDAMsg[:len(currKDAMsg)-1]
 		}
+
 		msg := fmt.Sprintf("本局%s：%s 近期KDA：%s", horse, scoreInfo.SummonerName, currKDAMsg)
+		log.Printf(msg)
 		<-sendConversationMsgDelayCtx.Done()
 		if clientCfg.AutoSendTeamHorse {
 			mergedMsg += msg + "\n"
@@ -510,8 +508,6 @@ func (p Prophet) CalcEnemyTeamScore() {
 			currKDASb.WriteString(fmt.Sprintf("%d/%d/%d  ", score.CurrKDA[i][0], score.CurrKDA[i][1],
 				score.CurrKDA[i][2]))
 		}
-		currKDAMsg := currKDASb.String()
-		log.Printf("敌方用户:%s,得分:%.2f,kda:%s\n", score.SummonerName, score.Score, currKDAMsg)
 	}
 	clientCfg := global.GetClientConf()
 	scoreCfg := global.GetScoreConf()
@@ -538,6 +534,7 @@ func (p Prophet) CalcEnemyTeamScore() {
 			currKDAMsg = currKDAMsg[:len(currKDAMsg)-1]
 		}
 		msg := fmt.Sprintf("敌方%s：%s 近期KDA：%s", horse, scoreInfo.SummonerName, currKDAMsg)
+		log.Printf(msg)
 		allMsg += msg + "\n"
 	}
 	_ = clipboard.WriteAll(allMsg)

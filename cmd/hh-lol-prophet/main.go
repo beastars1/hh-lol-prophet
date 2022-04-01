@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/real-web-world/hh-lol-prophet/bootstrap"
 	"io"
 	"log"
 	"net/http"
@@ -15,7 +16,6 @@ import (
 	"github.com/pkg/errors"
 
 	app "github.com/real-web-world/hh-lol-prophet"
-	"github.com/real-web-world/hh-lol-prophet/bootstrap"
 	"github.com/real-web-world/hh-lol-prophet/global"
 	"github.com/real-web-world/hh-lol-prophet/pkg/bdk"
 )
